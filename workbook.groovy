@@ -49,3 +49,14 @@ def root = new XmlSlurper().parse("$base$qs")
 
 def loc = root.result[0].geometry.location
 println "(${loc.lat}, ${loc.lng})"
+
+//Playing with JSON 
+import groovy.json.*
+String base = 'http://api.icndb.com/jokes/random?'
+
+def qs = [limitTo: '[nerdy]', firstName:'Guillaume', lastName: 'Laforge'].collect {
+    k,v -> "$k=$v"}.join('&')
+    
+String jsonTxt = "$base$qs".toURL().text
+def json = new JsonSlurper().parseText(jsonTxt)
+println json.value.joke
