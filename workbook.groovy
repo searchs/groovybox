@@ -25,3 +25,27 @@ List strings = 'this is a list of strings'.split()
 strings.collect { it.size() } //
 println strings*.size() //spread dot operator - applies method to each element in the collection
 println strings.size() // applies method to the collection
+
+
+def mp = [k1: 'v1', k2: 'v2', k3: 'v3']
+mp.collect {k, v -> println mp[k] }
+
+//Playing with Google's GeoCode APIs
+def gmap_uri = 'http://www.google.com'
+def results = gmap_uri.toURL().text
+println results.size()
+// println results
+
+String base = 'https://maps.googleapis.com/maps/api/geocode/xml?'
+def encoded = ['10 Fawcett Street', 'Cambridge', 'MA'].collect {
+    URLEncoder.encode(it, 'UTF-8')
+}.join(',')
+
+def qs = "address=$encoded"
+
+//"$base$qs".toURL().text
+//Playing with XML results
+def root = new XmlSlurper().parse("$base$qs")
+
+def loc = root.result[0].geometry.location
+println "(${loc.lat}, ${loc.lng})"
