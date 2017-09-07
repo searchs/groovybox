@@ -112,3 +112,32 @@ println strings.sort(false) {String s1, String s2 ->
 s1.size() <=> s2.size() ?: s2 <=> s1
 }
 
+
+
+//Addition
+List cts = [3,1,4,1,5,9,2,6,5]
+println cts
+
+//Groovy using collect
+assert 72 == cts.collect { it * 2 }.sum()
+
+//Reduce to a problem already solved
+assert 72 == cts.sum() * 2
+
+
+//Another sweet way
+assert 72 == cts.sum { it * 2 }
+
+//Using a Spread dot 
+
+assert 72 == cts*.multiply(2).sum()
+
+//Just double the collection
+assert 72 == (cts * 2).sum()
+
+
+//Using Groovy Inject - like Scala's Reduce?
+assert 72 == cts.inject(0) {acc, val ->
+acc + val * 2
+}
+
